@@ -89,7 +89,7 @@
 {#</section>#}
 		
 	<div class="fh5co-loader"></div>
-	
+
 	<div id="page">
 		<div id="fh5co-aside" style="background-image: url(images/image_1.jpg)">
 			<div class="overlay"></div>
@@ -103,25 +103,12 @@
 				<h2>I'm John Doe</h2>
 			</div>
 		</div>
-        {% block  %}
-        
-        {% endblock %}
 		<div id="fh5co-main-content">
 			<div class="fh5co-post">
-                {% for article in all_article %}
-                    <div class="fh5co-entry padding">
-					<img src="{{ article.image }}" alt="Free HTML5 Bootstrap Template by FreeHTML5.co">
-					    <div>
-                            <span class="fh5co-post-date">{{ article.date_published }}</span>
-                            <h2><a href="single.html">{{ article.title }}</a></h2>
-                            <p>{{ article.desc }}</p>
-					    </div>
-				    </div>
-
-                {% endfor %}
+                {% block custom %}{% endblock %}
 				<footer>
 					<div>
-					&copy; 2016 Free HTML5. All Rights Reserved. More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+					&copy; 2016 Free HTML5. All Rights Reserved. More Templates
 					</div>
 				</footer>
 			</div>

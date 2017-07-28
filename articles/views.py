@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect, reverse
 from django.views.generic import View
 from django.db.models import Q
 
@@ -47,12 +47,32 @@ class ArticleListView(View):
         })
 
 
-class ArticleAddView(View):
+class ArticleDetailView(View):
+    def get(self, request, article_id):
+        article = Article.objects.get(id=int(article_id))
+        article.click_count += 1
+        article.save()
+
+        if int(article_id)-1 < 0:
+            previous_article = Article.objects.get(id=int(article_id))
+        else:
+            previous_article = Article.objects.get(id=int(article_id)-1)
+
+        next_article = Article.objects.get(id=int(article_id)+1)
+
+        return render(request, 'detail.html', {
+            'article': article,
+            'previous_article': previous_article,
+            'next_article': next_article
+        })
+
+
+class ArticleCreateView(View):
         def post(self, request):
             article_create = ArticleForm
             if article_create.is_valid():
                 article_create.save(commit=True)
-                return HttpResponse('{"status": "success"}', content_type='application/json')
+                return HttpResponseRedirect(reverse('article:article_list'))
             else:
                 return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')
 
