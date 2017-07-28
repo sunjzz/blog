@@ -53,12 +53,15 @@ class ArticleDetailView(View):
         article.click_count += 1
         article.save()
 
-        if int(article_id)-1 < 0:
+        if int(article_id)-1 < 1:
             previous_article = Article.objects.get(id=int(article_id))
         else:
             previous_article = Article.objects.get(id=int(article_id)-1)
 
-        next_article = Article.objects.get(id=int(article_id)+1)
+        try:
+            next_article = Article.objects.get(id=int(article_id)+1)
+        except:
+            next_article = Article.objects.get(id=int(article_id))
 
         return render(request, 'detail.html', {
             'article': article,

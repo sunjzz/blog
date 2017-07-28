@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import include
+from django.views.static import serve
+
+from blog.settings import MEDIA_ROOT
 
 from articles.views import ArticleListView
 
@@ -25,6 +28,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', ArticleListView.as_view(), name='index'),
     url(r'^article/', include('articles.urls', namespace='article')),
+
+    url(r'^media/(?P<path>.*)/$', serve, {"document_root": MEDIA_ROOT}),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

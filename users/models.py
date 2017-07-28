@@ -8,7 +8,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class UserProfile(AbstractUser):
-    avatar = models.ImageField(upload_to='avatar/%Y/%m', default='avatar/default.png', max_length=200,
+    avatar = models.ImageField(upload_to='avatar/%Y/%m', default='avatar/default.jpg', max_length=200,
                                blank=True, null=True, verbose_name='用户头像')
     mobile = models.CharField(max_length=11, blank=True, null=True, unique=True, verbose_name=u'手机号')
     website = models.URLField()
