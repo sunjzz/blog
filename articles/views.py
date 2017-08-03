@@ -80,10 +80,21 @@ class ArticleCreateView(View):
         })
 
     def post(self, request):
-        article_create = ArticleForm
+        article_create = ArticleForm(request.POST)
+        print(article_create.is_valid())
+        print(article_create.cleaned_data)
+        print(article_create.cleaned_data['category']=)
+        print(article_create.errors)
+        print('aaaa')
         if article_create.is_valid():
             try:
-                article_create.save(commit=True)
+                print('---')
+                point = article_create.save(commit=False)
+
+                point.category = int(point.category)
+                point.tag = int(point.tag)
+                point.save()
+                print("===")
                 return HttpResponseRedirect(reverse('article:article_list'))
             except:
                 return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')

@@ -19,7 +19,7 @@
                 <label>文章分类</label>
                 <select id="js-pl-3">
                     {% for item in article_category %}
-                        <option value="{{ item }}">{{ item }}</option>
+                        <option value="{{ item.id }}">{{ item.name }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -27,16 +27,16 @@
                 <label>文章标签</label>
                 <select id="js-pl-4">
                     {% for item in article_tag %}
-                        <option value="{{ item }}">{{ item }}</option>
+                        <option value="{{ item.id }}">{{ item.name }}</option>
                     {% endfor %}
                 </select>
             </div>
-{#            <textarea name="editor1" id="js-pl-textarea"></textarea>#}
-{#            <script>#}
-{#                CKEDITOR.replace( 'editor1' );#}
-{#            </script>#}
+            <textarea name="editor1" id="editor1"></textarea>
+            <script>
+                CKEDITOR.replace( 'editor1' );
+            </script>
         <div>
-            <input type="submit" value="保存" id="js-pl-submit">
+            <button type="button" id="js-pl-submit">保存</button>
         </div>
         </form>
     </div>
@@ -49,22 +49,25 @@
             var article_desc = $("#js-pl-2").val();
             var article_category = $("#js-pl-3").val();
             var article_tag = $("#js-pl-4").val();
-            var article_content =  CKEDITOR.instances.editor1
+
+            var article_content =  CKEDITOR.instances.editor1.getData();
+
 {#            var article_content =  CKEDITOR.instances.editor1.getData();#}
 {#            var article_content = $("#js-pl-textarea").val();#}
-            console.log('test');
+            console.log(article_category)
+            console.log(article_tag)
             console.log(article_content);
-            if(article_content == ""){
-                alert("文章内容不能为空");
-                return
-            }
+{#            if(article_content == ""){#}
+{#                alert("文章内容不能为空");#}
+{#                return#}
+{#            }#}
             $.ajax({
                 cache: false,
                 type: "POST",
                 url:"{% url 'article:article_create' %}",
-                data:{'article_title':article_title, 'article_desc':article_desc,
-                    'article_category': article_category, 'article_tag': article_tag,
-                    'article_content': article_content},
+                data:{'title':article_title, 'desc':article_desc,
+                    'category': article_category, 'tag': article_tag,
+                    'content': article_content},
                 async: true,
                 beforeSend:function(xhr, settings){
                     xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
