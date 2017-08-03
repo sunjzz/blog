@@ -1,14 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block custom %}
-{#    <div class="fh5co-entry padding">#}
-{#        <img src="{% static 'images/project-1.jpg' %}" alt="Free HTML5 Bootstrap Template by FreeHTML5.co">#}
-{#        <div>#}
-{#            <span class="fh5co-post-date">October 12, 2016</span>#}
-{#            <h2><a href="{% url 'article:article_detail' article_id %}">How to be an effective web developer</a></h2>#}
-{#            <p>How two simple exercises changed my life</p>#}
-{#        </div>#}
-{#    </div>#}
     {% for article in all_article.object_list %}
         <div class="fh5co-entry padding">
         <img src="{{ MEDIA_URL }}{{ article.user.avatar }}" alt="Free HTML5 Bootstrap Template by FreeHTML5.co">
