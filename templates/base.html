@@ -42,6 +42,10 @@
 	<script src="{% static 'js/respond.min.js' %}"></script>
 	<![endif]-->
 
+{#    <script src="{% static 'js/ckeditor.js' %}"></script>#}
+{#    <script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script>#}
+        {% block head_js %}{% endblock %}
+
 	</head>
 	<body>
 
@@ -96,6 +100,8 @@
 			<nav role="navigation">
 				<ul>
 					<li><a href="{% url 'index' %}"><i class="icon-home"></i></a></li>
+                    <li><a href="{% url 'article:article_create' %}"><i class="icon-clipboard"></i></a></li>
+{#                    <li><a href="{% url 'user:article_create' %}"><i class="icon-clipboard"></i></a></li>#}
 				</ul>
 			</nav>
 			<div class="featured">
@@ -132,6 +138,7 @@
 	<!-- Main -->
 	<script src="{% static 'js/main.js' %}"></script>
 
+    {% block custom_js %}{% endblock %}
+
 	</body>
 </html>
-

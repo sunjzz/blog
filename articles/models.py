@@ -33,7 +33,7 @@ class Category(models.Model):
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=50, verbose_name=u'文章标题')
+    title = models.CharField(max_length=100, verbose_name=u'文章标题')
     desc = models.CharField(max_length=50, verbose_name=u'文章描述')
     image = models.ImageField(upload_to='image/%Y/%m', default='image/default.png', max_length=200,
                                blank=True, null=True, verbose_name='文章缩略图')

@@ -67,15 +67,15 @@
 					<div>
                         {% autoescape off %}
                         <p>{{ article.content }}</p>
-                        {% endautoescape %}
-					</div>
+					    {% endautoescape %}
+                    </div>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<div class="fh5co-navigation">
-		<div class="fh5co-cover prev fh5co-cover-sm" style="background-image: url(images/project-4.jpg)">
+		<div class="fh5co-cover prev fh5co-cover-sm" style="background-image: url({% static 'images/project-4.jpg' %})">
 			<div class="overlay"></div>
 
 			<a class="copy" href="{% url 'article:article_detail' previous_article.id %}">
@@ -90,7 +90,7 @@
 			</a>
 
 		</div>
-		<div class="fh5co-cover next fh5co-cover-sm" style="background-image: url(images/project-5.jpg)">
+		<div class="fh5co-cover next fh5co-cover-sm" style="background-image: url({% static 'images/project-5.jpg' %})">
 			<div class="overlay"></div>
 			<a class="copy" href="{% url 'article:article_detail' next_article.id %}">
 				<div class="display-t">
@@ -102,7 +102,6 @@
 					</div>
 				</div>
 			</a>
-
 		</div>
 	</div>
 
@@ -131,4 +130,3 @@
 
 	</body>
 </html>
-
