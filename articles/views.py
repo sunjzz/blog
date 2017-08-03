@@ -7,7 +7,7 @@ from django.db.models import Q
 
 from pure_pagination import Paginator, PageNotAnInteger
 
-from models import Article
+from models import Article, Tag, Category
 from forms import ArticleForm
 
 # Create your views here.
@@ -71,12 +71,23 @@ class ArticleDetailView(View):
 
 
 class ArticleCreateView(View):
-        def post(self, request):
-            article_create = ArticleForm
-            if article_create.is_valid():
+    def get(self, request):
+        article_category = Category.objects.all()
+        article_tag = Tag.objects.all()
+        return render(request, 'create.html', {
+            'article_category': article_category,
+            'article_tag': article_tag
+        })
+
+    def post(self, request):
+        article_create = ArticleForm
+        if article_create.is_valid():
+            try:
                 article_create.save(commit=True)
                 return HttpResponseRedirect(reverse('article:article_list'))
-            else:
+            except:
                 return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')
 
 
