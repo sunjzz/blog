@@ -42,9 +42,9 @@ class Article(models.Model):
     click_count = models.IntegerField(default=0, verbose_name=u'点击量')
     is_recommend = models.BooleanField(default=False, verbose_name=u'是否推荐')
     date_published = models.DateTimeField(auto_now_add=True, verbose_name=u'发布时间')
-    user = models.ForeignKey(UserProfile, verbose_name=u'用户')
+    user = models.ForeignKey(UserProfile, blank=True, null=True, verbose_name=u'用户')
     category = models.ForeignKey(Category, blank=True, null=True, verbose_name=u'分类')
-    tag = models.ManyToManyField(Tag, verbose_name=u'标签')
+    tag = models.ManyToManyField(Tag, blank=True, null=True, verbose_name=u'标签')
 
     def __str__(self):
         return self.title

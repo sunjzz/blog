@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, HttpResponse, HttpResponseRedirect, reverse
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect, reverse, redirect
 from django.views.generic import View
 from django.db.models import Q
 
@@ -80,22 +80,15 @@ class ArticleCreateView(View):
         })
 
     def post(self, request):
-        article_create = ArticleForm(request.POST)
-        print(article_create.is_valid())
-        print(article_create.cleaned_data)
-        print(article_create.cleaned_data['category']=)
-        print(article_create.errors)
-        print('aaaa')
-        if article_create.is_valid():
+        obj = ArticleForm(request.POST)
+        if obj.is_valid():
             try:
-                print('---')
-                point = article_create.save(commit=False)
-
-                point.category = int(point.category)
-                point.tag = int(point.tag)
-                point.save()
-                print("===")
-                return HttpResponseRedirect(reverse('article:article_list'))
+                # point = article_create.save(commit=False)
+                #
+                # point.category = int(point.category)
+                # point.tag = int(point.tag)
+                obj.save()
+                return redirect('article:article_list')
             except:
                 return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')
         else:
