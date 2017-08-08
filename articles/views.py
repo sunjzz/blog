@@ -74,29 +74,16 @@ class ArticleCreateView(View):
     def get(self, request):
         article_category = Category.objects.all()
         article_tag = Tag.objects.all()
-        article_user = request.GET.get('article_user', 'tony')
-        # current_user = Article.objects.filter(user__username__icontains=article_user).first()
-        # print(current_user)
         return render(request, 'create.html', {
             'article_category': article_category,
             'article_tag': article_tag,
-            'article_user': article_user
         })
 
     def post(self, request):
         obj = ArticleForm(request.POST)
-        # print(article_create.cleaned_data)
-        # print(article_create.errors)
         if obj.is_valid():
             try:
-                # article_create = obj.save(commit=False)
-                # print(article_create, type(article_create))
-                # article_create.save()
-                print('ok1')
-                # article_create.save_m2m()
-                # print('ok2')
                 obj.save()
-                print('ok2')
                 return redirect('article:article_list')
             except:
                 return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')
