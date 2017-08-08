@@ -77,6 +77,7 @@ class ArticleCreateView(View):
         return render(request, 'create.html', {
             'article_category': article_category,
             'article_tag': article_tag,
+
         })
 
     def post(self, request):
@@ -84,7 +85,8 @@ class ArticleCreateView(View):
         if obj.is_valid():
             try:
                 obj.save()
-                return redirect('article:article_list')
+
+                return HttpResponseRedirect(reverse('article:article_list' ))
             except:
                 return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')
         else:
