@@ -52,8 +52,6 @@
 
             var article_content =  CKEDITOR.instances.editor1.getData();
 
-{#            var article_content =  CKEDITOR.instances.editor1.getData();#}
-{#            var article_content = $("#js-pl-textarea").val();#}
             console.log(article_category)
             console.log(article_tag)
             console.log(article_content);
@@ -67,7 +65,7 @@
                 url:"{% url 'article:article_create' %}",
                 data:{'title':article_title, 'desc':article_desc,
                     'category': article_category, 'tag': article_tag,
-                    'content': article_content},
+                    'content': article_content}, 'user': 'tony',
                 async: true,
                 beforeSend:function(xhr, settings){
                     xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
