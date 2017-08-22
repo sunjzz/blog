@@ -85,8 +85,10 @@ class ArticleCreateView(View):
         if obj.is_valid():
             try:
                 obj.save()
-
-                return HttpResponseRedirect(reverse('article:article_list' ))
+                try:
+                    return HttpResponseRedirect(reverse('article:article_list'))
+                except:
+                    return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')
             except:
                 return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')
         else:
