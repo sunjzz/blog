@@ -81,9 +81,11 @@
                             alert(data.msg)
                         }
 {##}
-{#                    }else if(data.status == 'success'){#}
+                    else if(data.status == 'success'){
 {#                        window.location.reload();//刷新当前页面.#}
-{#                    }#}
+{#                        alert(data.msg);#}
+                        window.location.href = "/article/detail/"+data.msg;
+                    }
                 }
             });
         });

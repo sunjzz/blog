@@ -28,7 +28,7 @@ class ModifyForm(forms.Form):
 class UploadImageForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['image']
+        fields = ['avatar']
 
 
 class UpdateUserInfoForm(forms.ModelForm):

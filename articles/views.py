@@ -53,15 +53,13 @@ class ArticleDetailView(View):
         article.click_count += 1
         article.save()
 
-        if int(article_id)-1 < 1:
-            previous_article = Article.objects.get(id=int(article_id))
-        else:
-            previous_article = Article.objects.get(id=int(article_id)-1)
+        previous_article = Article.objects.raw('SELECT * FROM articles_article WHERE id < %s OR ID=(SELECT MIN(ID) FROM articles_article) ORDER BY id DESC LIMIT 1' % int(article_id))[0]
+        if previous_article.id == int(article_id):
+            previous_article = article
 
-        try:
-            next_article = Article.objects.get(id=int(article_id)+1)
-        except:
-            next_article = Article.objects.get(id=int(article_id))
+        next_article = Article.objects.raw('SELECT * FROM articles_article WHERE id > %s OR ID=(SELECT MAX(ID) FROM articles_article) ORDER BY id ASC LIMIT 1' % int(article_id))[0]
+        if next_article.id == int(article_id):
+            next_article = article
 
         return render(request, 'detail.html', {
             'article': article,
@@ -77,21 +75,16 @@ class ArticleCreateView(View):
         return render(request, 'create.html', {
             'article_category': article_category,
             'article_tag': article_tag,
-
         })
 
     def post(self, request):
         obj = ArticleForm(request.POST)
         if obj.is_valid():
-            try:
-                obj.save()
-                try:
-                    return HttpResponseRedirect(reverse('article:article_list'))
-                except:
-                    return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')
-            except:
-                return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')
+            instance = obj.save()
+            return HttpResponse('{"status": "success", "msg": "%s"}' % instance.id, content_type='application/json')
         else:
             return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')
+
+
 
 
