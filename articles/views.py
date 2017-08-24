@@ -41,9 +41,15 @@ class ArticleListView(View):
 
         article = p.page(page)
 
+        if not request.user.is_authenticated():
+            username = 'Visitor'
+        else:
+            username = request.user.username
+
         return render(request, "index.html", {
             "all_article": article,
-            "sort": sort
+            "sort": sort,
+            "username": username
         })
 
 
