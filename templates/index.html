@@ -19,4 +19,32 @@
             </div>
         </div>
     {% endfor %}
+    <div class="pageturn">
+        <ul class="pagelist">
+            {% if all_article.has_previous %}
+                <li class="long"><a href="?{{ all_article.previous_page_number.querystring }}">上一页</a></li>
+            {% endif %}
+            {% for page in all_article.pages %}
+                {% if page %}
+                    {% ifequal page all_article.number %}
+                        <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                    {% else %}
+                        <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                    {% endifequal %}
+                {% else %}
+                    <li class="none"><a href="">...</a> </li>
+                {% endif %}
+            {% endfor %}
+            {% if all_article.has_next %}
+                <li class="long"><a href="?{{ all_article.next_page_number.querystring }}">下一页</a></li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+{% block custom_js %}
+    <script type="application/javascript">
+        {% for article in all_article.object_list %}
+            console.log({{ article.user.avatar }})
+        {% endfor %}
+    </script>
 {% endblock %}

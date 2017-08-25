@@ -15,8 +15,8 @@ class LoginForm(forms.Form):
 
 class RegisterForm(forms.Form):
     username = forms.CharField(required=True)
-    password1 = forms.CharField(required=True, min_length=5)
-    password2 = forms.CharField(required=True, min_length=5)
+    psw1 = forms.CharField(required=True, min_length=5)
+    psw2 = forms.CharField(required=True, min_length=5)
     captcha = CaptchaField(required=True)
 
 

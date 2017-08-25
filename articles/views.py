@@ -37,7 +37,7 @@ class ArticleListView(View):
         except PageNotAnInteger:
             page = 1
 
-        p = Paginator(choose_sort, 10, request=request)
+        p = Paginator(choose_sort, 5, request=request)
 
         article = p.page(page)
 
@@ -85,8 +85,14 @@ class ArticleCreateView(View):
 
     def post(self, request):
         obj = ArticleForm(request.POST)
+        current_user = request.user
+        print(current_user)
         if obj.is_valid():
-            instance = obj.save()
+            instance = obj.save(commit=False)
+            instance.user_id = current_user.id
+            instance.save()
+            obj.save_m2m()
+
             return HttpResponse('{"status": "success", "msg": "%s"}' % instance.id, content_type='application/json')
         else:
             return HttpResponse('{"status": "fail", "msg": "保存出错"}', content_type='application/json')

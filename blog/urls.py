@@ -23,14 +23,18 @@ from django.views.static import serve
 from blog.settings import MEDIA_ROOT
 
 from articles.views import ArticleListView
-from users.views import UserLoginView
+from users.views import UserLoginView, UserRegisterView, UserLogoutView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/', UserLoginView.as_view(), name='login'),
+    url(r'^logout/', UserLogoutView.as_view(), name='logout'),
+    url(r'^register/', UserRegisterView.as_view(), name='register'),
     url(r'^$', ArticleListView.as_view(), name='index'),
     url(r'^article/', include('articles.urls', namespace='article')),
 
     url(r'^media/(?P<path>.*)/$', serve, {"document_root": MEDIA_ROOT}),
+    url(r'^captcha/', include('captcha.urls')),
+
 ]
 

@@ -2,12 +2,17 @@
 {% block custom_user %}
 	<div class="content2">
 		<h2>Sign Up Form</h2>
-		<form>
-			<input type="text" name="userid" value="USERNAME" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'NAME AND SURNAME';}">
-			<input type="tel" name="usrtel" value="PHONE" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'PHONE';}">
-			<input type="email" name="email" value="EMAIL ADDRESS" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'EMAIL ADDRESS';}">
-			<input type="password" name="psw" value="PASSWORD" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'PASSWORD';}">
+		<form method="post">
+			<input type="text" name="username" value="USERNAME" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'NAME AND SURNAME';}">
+			<input type="tel" name="phone" value="PHONE" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'PHONE';}">
+            <input type="password" name="psw1" value="PASSWORD" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'PASSWORD';}">
+			<input type="password" name="psw2" value="PASSWORD" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'PASSWORD';}">
+            <div class="{% if register_form.errors.captcha %}errorput{% endif %}">
+                {{ register_form.captcha }}
+            </div>
+{#            <input type="text" name="captcha" value="CAPTCHA" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'CAPTCHA';}">#}
 			<input type="submit" class="register" value="Register">
+            {% csrf_token %}
 		</form>
 	</div>
 {% endblock %}
